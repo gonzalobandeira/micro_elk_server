@@ -9,7 +9,7 @@ processors:
 
   - decode_json_fields:
       fields: ["message"]
-      target: "json"
+      target: "app"
       overwrite_keys: true
 
 output.elasticsearch:
