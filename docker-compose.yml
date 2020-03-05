@@ -19,7 +19,6 @@ services:
         volumes:
             - /home/gonzalo/Documents/2.-Proyectos/micro_elk_server/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
 
-
     filebeat:
         image: "docker.elastic.co/beats/filebeat:7.2.0"
         user: root
