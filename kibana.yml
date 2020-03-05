@@ -1,2 +1,2 @@
-elasticsearch.username: "kibana"
-elasticsearch.password: "kibanapassword"
+#elasticsearch.username: "kibana"
+#elasticsearch.password: "kibanapassword"
