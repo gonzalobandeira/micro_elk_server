@@ -1,28 +1,21 @@
 version: "3"
 services:
-    elasticsearch:
-        image: "docker.elastic.co/elasticsearch/elasticsearch:7.2.0"
-        environment:
-            - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-            - "discovery.type=single-node"
-        ports:
-            - "9200:9200"
-        volumes:
-            - elasticsearch_data:/usr/share/elasticsearch/data
-            - /home/gonzalo/Documents/2.-Proyectos/micro_elk_server/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
 
-    kibana:
-        image: "docker.elastic.co/kibana/kibana:7.2.0"
-        ports:
-            - "5601:5601"
+  filebeat:
+    image: "docker.elastic.co/beats/filebeat:7.2.0"
+    container_name: filebeat_loggly
+    user: root
+    volumes:
+      - /home/gonzalo/Documents/2.-Proyectos/micro_elk_server/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock
 
-    filebeat:
-        image: "docker.elastic.co/beats/filebeat:7.2.0"
-        user: root
-        volumes:
-            - /home/gonzalo/Documents/2.-Proyectos/micro_elk_server/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-            - /var/lib/docker:/var/lib/docker:ro
-            - /var/run/docker.sock:/var/run/docker.sock
-
-volumes:
-    elasticsearch_data:
+  logstash:
+    build: .
+    container_name: logstash_loggly
+    environment:
+        - TOKEN=${TOKEN}
+    command: logstash -f /logstash.conf
+    volumes:
+      - /home/gonzalo/Documents/2.-Proyectos/micro_elk_server/logstash.conf:/logstash.conf
+      - /home/gonzalo/Documents/2.-Proyectos/micro_elk_server/logstash.yml:/usr/share/logstash/config/logstash.yml
