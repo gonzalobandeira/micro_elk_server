@@ -14,7 +14,7 @@ processors:
 
 output:
   logstash:
-    hosts: ["logstash:5044"]
+    hosts: ["logstash_loggly:5044"]
     timeout: 320
 
 logging.json: true
